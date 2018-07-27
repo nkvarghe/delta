@@ -1,5 +1,7 @@
 from tkinter import *
 from kinematics import *
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plot
 #import slush
 #import move
 import time
@@ -11,7 +13,7 @@ This part will be used once the rasperrypi/slushengine is working
 SlushEngine = Slush.sBoard()
 
 #Initialize motors and set the currents
-
+#setCurrent arguments (current,current while holding, current accel,current decel)
 motor1 = Slush.Motor(1)
 motor1.resetDev()
 motor1.setCurrent(10,10,10,10)
@@ -113,6 +115,17 @@ def zScale(var):
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
 
+def plot_3D():
+
+	global x0,y0,z0
+	fig = plot.figure()
+	axes = fig.add_subplot(111, projection='3d')
+	axes.scatter(x0,y0,z,c='r',marker='o')
+	axes.set_xlabel('x axis')
+	axes.set_ylabel('y axis')
+	axes.set_zlabel('z axis')
+	plot.show()
+
 #main window
 root = Tk()
 root.geometry('1000x300')
@@ -128,7 +141,7 @@ t = 0
 FrameLeft = Frame(root)
 FrameRight = Frame(root)
 '''
-#Buttons
+#Incremental moves
 x_pos = Button(root, text = "x-pos", fg = "red", command = xPos).place(x=100,y=100)
 x_neg = Button(root, text = "x-neg", fg = "red", command = xNeg).place(x=150,y=100)
 y_pos = Button(root, text = "y-pos", fg = "red", command = yPos).place(x=100,y=150)
@@ -152,10 +165,13 @@ labelZ = Label(text = 'Z-coord').place(x=300,y=170)
 
 coord = Button(root, text = "MOVE!", fg = "black", bg = "red", command = userInput).place(x=350,y=50)
 
-#Sliders
+#Scale for greater degree of movement
 Slider_1 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,label='X-scale',command=xScale).place(x=500,y=70)
 Slider_2 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,label='Y-scale',command=yScale).place(x=500,y=120)
 Slider_3 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,from_=-50,to=0,label='Z-scale',command=zScale).place(x=500,y=170)
+
+#Plot coordinates onto 3D grid
+Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D). pack()
 
 """
 #Positioned in the Right frame
