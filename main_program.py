@@ -35,6 +35,7 @@ def xPos():
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
+    var1.set(x0)
     time.sleep(t)
 
 def xNeg():
@@ -43,6 +44,7 @@ def xNeg():
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
+    var1.set(x0)
     time.sleep(t)
 
 def yPos():
@@ -51,6 +53,7 @@ def yPos():
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
+    var2.set(y0)
     time.sleep(t)
 
 def yNeg():
@@ -59,6 +62,7 @@ def yNeg():
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
+    var2.set(y0)
     time.sleep(t)
 
 def zPos():
@@ -67,6 +71,7 @@ def zPos():
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
+    var3.set(z0)
     time.sleep(t)
 
 def zNeg():
@@ -75,6 +80,7 @@ def zNeg():
     #motorMove(goTo)
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
+    var3.set(z0)
     time.sleep(t)
 
 def home():
@@ -83,6 +89,9 @@ def home():
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
+    var1.set(x0)
+    var2.set(y0)
+    var3.set(z0)
     time.sleep(t)
 
 def userInput():
@@ -93,34 +102,24 @@ def userInput():
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0, y0, z0))
     print((x0,y0,z0))
+    var1.set(x0)
+    var2.set(y0)
+    var3.set(z0)
 
-def xScale(var):
+def moveScale():
     global x0,y0,z0
-    x0 = int(var)
+    x0 = var1.get()
+    y0 = var2.get()
+    z0 = var3.get()
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
-
-def yScale(var):
-    global x0,y0,z0
-    y0 = int(var)
-    #motorMove(inverse(x0,y0,z0))
-    print(inverse(x0,y0,z0))
-    print((x0,y0,z0))
-
-def zScale(var):
-    global x0,y0,z0
-    z0 = int(var)
-    #motorMove(inverse(x0,y0,z0))
-    print(inverse(x0,y0,z0))
-    print((x0,y0,z0))
-
+    
 def plot_3D():
-
 	global x0,y0,z0
 	fig = plot.figure()
 	axes = fig.add_subplot(111, projection='3d')
-	axes.scatter(x0,y0,z,c='r',marker='o')
+	axes.scatter(x0,y0,z0,c='r',marker='o')
 	axes.set_xlabel('x axis')
 	axes.set_ylabel('y axis')
 	axes.set_zlabel('z axis')
@@ -166,9 +165,14 @@ labelZ = Label(text = 'Z-coord').place(x=300,y=170)
 coord = Button(root, text = "MOVE!", fg = "black", bg = "red", command = userInput).place(x=350,y=50)
 
 #Scale for greater degree of movement
-Slider_1 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,label='X-scale',command=xScale).place(x=500,y=70)
-Slider_2 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,label='Y-scale',command=yScale).place(x=500,y=120)
-Slider_3 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,from_=-50,to=0,label='Z-scale',command=zScale).place(x=500,y=170)
+var1 = IntVar()
+var2 = IntVar()
+var3 = IntVar()
+slider1 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,label='X-scale',variable=var1).place(x=500,y=70)
+slider2 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,label='Y-scale',variable=var2).place(x=500,y=120)
+slider3 = Scale(root,orient=HORIZONTAL,length=300,width=10,tickinterval=10,from_=-50,to=0,label='Z-scale',variable=var3).place(x=500,y=170)
+
+scale = Button(root, text = "MOVE!", fg = "red", bg = "black", command = moveScale).place(x=550,y=50)
 
 #Plot coordinates onto 3D grid
 Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D). pack()
