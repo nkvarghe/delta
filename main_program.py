@@ -34,12 +34,11 @@ def xPos():
     x0 = x0 + 1
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
-    print((x0,y0,z0))
     var1.set(x0)
     time.sleep(t)
 
 def xNeg():
-    global x0,goTo
+    global x0
     x0 = x0 - 1
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
@@ -48,7 +47,7 @@ def xNeg():
     time.sleep(t)
 
 def yPos():
-    global y0,goTo
+    global y0
     y0 = y0 + 1
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
@@ -114,7 +113,18 @@ def moveScale():
     #motorMove(inverse(x0,y0,z0))
     print(inverse(x0,y0,z0))
     print((x0,y0,z0))
-    
+
+def showOutput():
+    global x0,y0,z0
+    angles = inverse(x0,y0,z0)
+    OutputX.config(text=x0)
+    OutputY.config(text=y0)
+    OutputZ.config(text=z0)
+    OutputAngle1.config(text=angles[1])
+    OutputAngle2.config(text=angles[2])
+    OutputAngle3.config(text=angles[3])
+    print(angles[1])
+
 def plot_3D():
 	global x0,y0,z0
 	fig = plot.figure()
@@ -127,7 +137,7 @@ def plot_3D():
 
 #main window
 root = Tk()
-root.geometry('1000x300')
+root.geometry('1000x600')
 root.title('My Delta')
 
 #Home coordinates and time constant
@@ -135,12 +145,13 @@ x0 = 0
 y0 = 0
 z0 = -50
 t = 0
+initialAngles = inverse(x0,y0,z0)
 '''  
 #Divide the interface between grid and options
 FrameLeft = Frame(root)
 FrameRight = Frame(root)
 '''
-#Incremental moves
+#Buttons to move by increments
 x_pos = Button(root, text = "x-pos", fg = "red", command = xPos).place(x=100,y=100)
 x_neg = Button(root, text = "x-neg", fg = "red", command = xNeg).place(x=150,y=100)
 y_pos = Button(root, text = "y-pos", fg = "red", command = yPos).place(x=100,y=150)
@@ -149,22 +160,21 @@ z_pos = Button(root, text = "z-pos", fg = "red", command = zPos).place(x=100,y=2
 z_neg = Button(root, text = "z-neg", fg = "red", command = zNeg).place(x=150,y=200)
 home = Button(root, text = "Home", fg = "red", command = home).place(x=125,y=50)
 
-
 #Entry boxes for user specified coordinates
 x = StringVar()
 y = StringVar()
 z = StringVar()
-x_text = Entry(root, textvariable=x,).place(x=300,y=100)
+x_text = Entry(root, textvariable=x).place(x=300,y=100)
 y_text = Entry(root, textvariable=y).place(x=300,y=150)
 z_text = Entry(root, textvariable=z).place(x=300,y=200)
 
-labelX = Label(text = 'X-coord').place(x=300,y=70)
-labelY = Label(text = 'Y-coord').place(x=300,y=120)
-labelZ = Label(text = 'Z-coord').place(x=300,y=170)
+labelX = Label(root,text = 'X-coord').place(x=300,y=70)
+labelY = Label(root,text = 'Y-coord').place(x=300,y=120)
+labelZ = Label(root,text = 'Z-coord').place(x=300,y=170)
 
 coord = Button(root, text = "MOVE!", fg = "black", bg = "red", command = userInput).place(x=350,y=50)
 
-#Scale for greater degree of movement
+#Scales for greater degree of movement
 var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
@@ -177,6 +187,24 @@ scale = Button(root, text = "MOVE!", fg = "red", bg = "black", command = moveSca
 #Plot coordinates onto 3D grid
 Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D). pack()
 
+#Display coordinates and angles
+OutputBox = LabelFrame(root,text = "OutputBox")
+OutputBox.pack(side = BOTTOM)
+displayOutput = Button(OutputBox, text = "Output", fg = "Black", bg = "Blue", command = showOutput).pack()
+
+
+OutputX = Label(OutputBox,text = x0)
+OutputX.pack()
+OutputY = Label(OutputBox,text = y0)
+OutputY.pack()
+OutputZ = Label(OutputBox,text = z0)
+OutputZ.pack()
+OutputAngle1 = Label(OutputBox,text = initialAngles[1])
+OutputAngle1.pack()
+OutputAngle2 = Label(OutputBox,text = initialAngles[2])
+OutputAngle2.pack()
+OutputAngle3 = Label(OutputBox,text = initialAngles[3])
+OutputAngle3.pack()
 """
 #Positioned in the Right frame
 x_pos.pack(side = LEFT)
