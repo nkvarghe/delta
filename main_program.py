@@ -78,7 +78,7 @@ def home():
     var2.set(y0)
     var3.set(z0)
     time.sleep(t)
-
+"""
 def userInput():
     global x0,y0,z0
     x0 = int(x.get())
@@ -88,7 +88,7 @@ def userInput():
     var1.set(x0)
     var2.set(y0)
     var3.set(z0)
-
+"""
 def moveScale():
     global x0,y0,z0
     x0 = var1.get()
@@ -102,9 +102,9 @@ def showOutput():
     OutputX.config(text=x0)
     OutputY.config(text=y0)
     OutputZ.config(text=z0)
-    OutputAngle1.config(text=angles[1])
-    OutputAngle2.config(text=angles[2])
-    OutputAngle3.config(text=angles[3])
+    OutputAngle1.config(text=round(angles[1],2))
+    OutputAngle2.config(text=round(angles[2],2))
+    OutputAngle3.config(text=round(angles[3],2))
 
 def plot_3D():
 	global x0,y0,z0
@@ -118,7 +118,7 @@ def plot_3D():
 
 #main window
 root = Tk()
-root.geometry('1000x600')
+root.geometry('500x600+200+200')
 root.title('My Delta')
 
 #Home coordinates and time constant
@@ -129,53 +129,74 @@ t = 0
 initialAngles = inverse(x0,y0,z0)
 
 #Buttons to move by increments
-x_pos = Button(root, text = "x-pos", fg = "red", command = xPos).place(x=100,y=100)
-x_neg = Button(root, text = "x-neg", fg = "red", command = xNeg).place(x=150,y=100)
-y_pos = Button(root, text = "y-pos", fg = "red", command = yPos).place(x=100,y=150)
-y_neg = Button(root, text = "y-neg", fg = "red", command = yNeg).place(x=150,y=150)
-z_pos = Button(root, text = "z-pos", fg = "red", command = zPos).place(x=100,y=200)
-z_neg = Button(root, text = "z-neg", fg = "red", command = zNeg).place(x=150,y=200)
-home = Button(root, text = "Home", fg = "red", command = home).place(x=125,y=50)
-
+ButtonFrame = LabelFrame(root,text = "Buttons")
+ButtonFrame.pack()
+home = Button(ButtonFrame, text = "Home", fg = "red", command = home).grid(row=0,column=0)
+x_pos = Button(ButtonFrame, text = "x-pos", fg = "red", command = xPos).grid(row=1,column=0)
+x_neg = Button(ButtonFrame, text = "x-neg", fg = "red", command = xNeg).grid(row=1,column=1)
+y_pos = Button(ButtonFrame, text = "y-pos", fg = "red", command = yPos).grid(row=2,column=0)
+y_neg = Button(ButtonFrame, text = "y-neg", fg = "red", command = yNeg).grid(row=2,column=1)
+z_pos = Button(ButtonFrame, text = "z-pos", fg = "red", command = zPos).grid(row=3,column=0)
+z_neg = Button(ButtonFrame, text = "z-neg", fg = "red", command = zNeg).grid(row=3,column=1)
+"""
 #Entry boxes for user specified coordinates
 x = StringVar()
 y = StringVar()
 z = StringVar()
-x_text = Entry(root, textvariable = x).place(x=300,y=100)
-y_text = Entry(root, textvariable = y).place(x=300,y=150)
-z_text = Entry(root, textvariable = z).place(x=300,y=200)
-labelX = Label(root,text = 'X-coord').place(x=300,y=70)
-labelY = Label(root,text = 'Y-coord').place(x=300,y=120)
-labelZ = Label(root,text = 'Z-coord').place(x=300,y=170)
-coord = Button(root, text = "MOVE!", fg = "black", bg = "red", command = userInput).place(x=350,y=50)
-
+EntryFrame = LabelFrame(root,text = "User Input")
+EntryFrame.pack(fill=X)
+coord = Button(EntryFrame, text = "MOVE!", fg = "black", bg = "red", command = userInput).pack()
+labelX = Label(EntryFrame,text = 'X-coord').pack()
+x_text = Entry(EntryFrame, textvariable = x).pack()
+labelY = Label(EntryFrame,text = 'Y-coord').pack()
+y_text = Entry(EntryFrame, textvariable = y).pack()
+labelZ = Label(EntryFrame,text = 'Z-coord').pack()
+z_text = Entry(EntryFrame, textvariable = z).pack()
+"""
 #Scales for greater degree of movement
 var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
-slider1 = Scale(root,orient = HORIZONTAL,length = 300,width = 10,tickinterval = 10,label = 'X-scale',variable = var1).place(x=500,y=70)
-slider2 = Scale(root,orient = HORIZONTAL,length = 300,width = 10,tickinterval = 10,label = 'Y-scale',variable = var2).place(x=500,y=120)
-slider3 = Scale(root,orient = HORIZONTAL,length = 300,width = 10,tickinterval = 10,from_ = -50,to = 0,label = 'Z-scale',variable = var3).place(x=500,y=170)
-scale = Button(root, text = "MOVE!", fg = "red", bg = "black", command = moveScale).place(x=550,y=50)
-
-#Plot coordinates onto 3D grid
-Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D). pack()
+ScaleFrame = LabelFrame(root,text = "Sliders")
+ScaleFrame.pack()
+slider1 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_=0,to = 30,label = 'X-scale',variable = var1).grid(row=0,column=0)
+slider2 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_= 0,to = 30,label = 'Y-scale',variable = var2).grid(row=0,column=1)
+slider3 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_ = -50,to = -39,label = 'Z-scale',variable = var3).grid(row=0,column=2)
+var3.set(-50)
+ScaleButtonFrame = LabelFrame(root).pack(fill=X)
+scale = Button(ScaleButtonFrame, text = "MOVE!", fg = "red", bg = "black", command = moveScale).pack(fill=X)
 
 #Display coordinates and angles
 OutputBox = LabelFrame(root,text = "OutputBox")
-OutputBox.pack(side = BOTTOM)
-displayOutput = Button(OutputBox, text = "Output", fg = "Black", bg = "Blue", command = showOutput).pack()
+OutputBox.pack()
+XLabel = Label(OutputBox,text = 'X :')
+XLabel.grid(row=0,column=0)
 OutputX = Label(OutputBox,text = x0)
-OutputX.pack()
+OutputX.grid(row=0,column=1)
+YLabel = Label(OutputBox,text = 'Y :')
+YLabel.grid(row=1,column=0)
 OutputY = Label(OutputBox,text = y0)
-OutputY.pack()
+OutputY.grid(row=1,column=1)
+ZLabel = Label(OutputBox,text = 'Z :')
+ZLabel.grid(row=3,column=0)
 OutputZ = Label(OutputBox,text = z0)
-OutputZ.pack()
-OutputAngle1 = Label(OutputBox,text = initialAngles[1])
-OutputAngle1.pack()
-OutputAngle2 = Label(OutputBox,text = initialAngles[2])
-OutputAngle2.pack()
-OutputAngle3 = Label(OutputBox,text = initialAngles[3])
-OutputAngle3.pack()
+OutputZ.grid(row=3,column=1)
+Angle1 = Label(OutputBox,text = 'Angle1 :')
+Angle1.grid(row=4,column=0)
+OutputAngle1 = Label(OutputBox,text = round(initialAngles[1],2))
+OutputAngle1.grid(row=4,column=1)
+Angle2 = Label(OutputBox,text = 'Angle2 :')
+Angle2.grid(row=5,column=0)
+OutputAngle2 = Label(OutputBox,text = round(initialAngles[2],2))
+OutputAngle2.grid(row=5,column=1)
+Angle3 = Label(OutputBox,text = 'Angle3 :')
+Angle3.grid(row=6,column=0)
+OutputAngle3 = Label(OutputBox,text = round(initialAngles[3],2))
+OutputAngle3.grid(row=6,column=1)
+OutputButtonFrame = LabelFrame(root).pack(fill=X)
+displayOutput = Button(OutputButtonFrame, text = "Output", fg = "Black", bg = "Blue", command = showOutput).pack(fill=X)
+
+#Plot coordinates onto 3D grid
+Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D).pack(fill=X)
 
 root.mainloop()
