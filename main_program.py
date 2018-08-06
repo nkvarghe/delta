@@ -6,95 +6,67 @@ import matplotlib.pyplot as plot
 #import move
 import time
 
-"""
-This part will be used once the rasperrypi/slushengine is working
-
-#initialize the board
+#Initialize the Board
 SlushEngine = Slush.sBoard()
-
-#Initialize motors and set the currents
-#setCurrent arguments (current,current while holding, current accel,current decel)
-motor1 = Slush.Motor(1)
-motor1.resetDev()
-motor1.setCurrent(10,10,10,10)
-
-motor2 = Slush.Motor(2)
-motor2.resetDev()
-motor2.setCurrent(10,10,10,10)
-
-motor3 = Slush.Motor(3)
-motor3.resetDev()
-motor3.setCurrent(10,10,10,10)
-"""
 
 #functions called to move delta 
 def xPos():
     global x0
     x0 = x0 + 1
-    #motorMove(inverse(x0,y0,z0))
+    motorMove(inverse(x0,y0,z0))
     var1.set(x0)
     time.sleep(t)
 
 def xNeg():
     global x0
     x0 = x0 - 1
-    #motorMove(inverse(x0,y0,z0))
+    motorMove(inverse(x0,y0,z0))
     var1.set(x0)
     time.sleep(t)
 
 def yPos():
     global y0
     y0 = y0 + 1
-    #motorMove(inverse(x0,y0,z0))
+    motorMove(inverse(x0,y0,z0))
     var2.set(y0)
     time.sleep(t)
 
 def yNeg():
     global y0
     y0 = y0 - 1
-    #motorMove(inverse(x0,y0,z0))
+    motorMove(inverse(x0,y0,z0))
     var2.set(y0)
     time.sleep(t)
 
 def zPos():
     global z0
     z0 = z0 + 1
-    #motorMove(inverse(x0,y0,z0))
+    motorMove(inverse(x0,y0,z0))
     var3.set(z0)
     time.sleep(t)
 
 def zNeg():
     global z0
     z0 = z0 - 1
-    #motorMove(inverse(x0,y0,z0))
+    motorMove(inverse(x0,y0,z0))
     var3.set(z0)
     time.sleep(t)
 
 def home():
     global x0,y0,z0
     x0,y0,z0 = 0,0,-50
-    #motorMove(inverse(x0,y0,z0))
+    motorMove(inverse(x0,y0,z0))
     var1.set(x0)
     var2.set(y0)
     var3.set(z0)
     time.sleep(t)
-"""
-def userInput():
-    global x0,y0,z0
-    x0 = int(x.get())
-    y0 = int(y.get())
-    z0 = int(z.get())
-    #motorMove(inverse(x0,y0,z0))
-    var1.set(x0)
-    var2.set(y0)
-    var3.set(z0)
-"""
+
 def moveScale():
     global x0,y0,z0
     x0 = var1.get()
     y0 = var2.get()
     z0 = var3.get()
-    #motorMove(inverse(x0,y0,z0))
+    motorMove(inverse(x0,y0,z0))
 
 def showOutput():
     global x0,y0,z0
@@ -138,21 +110,7 @@ y_pos = Button(ButtonFrame, text = "y-pos", fg = "red", command = yPos).grid(row
 y_neg = Button(ButtonFrame, text = "y-neg", fg = "red", command = yNeg).grid(row=2,column=1)
 z_pos = Button(ButtonFrame, text = "z-pos", fg = "red", command = zPos).grid(row=3,column=0)
 z_neg = Button(ButtonFrame, text = "z-neg", fg = "red", command = zNeg).grid(row=3,column=1)
-"""
-#Entry boxes for user specified coordinates
-x = StringVar()
-y = StringVar()
-z = StringVar()
-EntryFrame = LabelFrame(root,text = "User Input")
-EntryFrame.pack(fill=X)
-coord = Button(EntryFrame, text = "MOVE!", fg = "black", bg = "red", command = userInput).pack()
-labelX = Label(EntryFrame,text = 'X-coord').pack()
-x_text = Entry(EntryFrame, textvariable = x).pack()
-labelY = Label(EntryFrame,text = 'Y-coord').pack()
-y_text = Entry(EntryFrame, textvariable = y).pack()
-labelZ = Label(EntryFrame,text = 'Z-coord').pack()
-z_text = Entry(EntryFrame, textvariable = z).pack()
-"""
+
 #Scales for greater degree of movement
 var1 = IntVar()
 var2 = IntVar()
