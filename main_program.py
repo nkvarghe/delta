@@ -1,61 +1,63 @@
 from tkinter import *
 from kinematics import *
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plot
-#import slush
-#import move
+#from mpl_toolkits.mplot3d import Axes3D
+#import matplotlib.pyplot as plot
+import Slush
+import move_motors
 import time
 
 #Initialize the Board
 SlushEngine = Slush.sBoard()
 
+motor1 = move_motors.motorControl('Motor1',1)
+
 #functions called to move delta 
 def xPos():
     global x0
     x0 = x0 + 1
-    motorMove(inverse(x0,y0,z0))
+    motor1.motorMove(inverse(x0,y0,z0))
     var1.set(x0)
     time.sleep(t)
 
 def xNeg():
     global x0
     x0 = x0 - 1
-    motorMove(inverse(x0,y0,z0))
+    motor1.motorMove(inverse(x0,y0,z0))
     var1.set(x0)
     time.sleep(t)
 
 def yPos():
     global y0
     y0 = y0 + 1
-    motorMove(inverse(x0,y0,z0))
+    motor1.motorMove(inverse(x0,y0,z0))
     var2.set(y0)
     time.sleep(t)
 
 def yNeg():
     global y0
     y0 = y0 - 1
-    motorMove(inverse(x0,y0,z0))
+    motor1.motorMove(inverse(x0,y0,z0))
     var2.set(y0)
     time.sleep(t)
 
 def zPos():
     global z0
     z0 = z0 + 1
-    motorMove(inverse(x0,y0,z0))
+    motor1.motorMove(inverse(x0,y0,z0))
     var3.set(z0)
     time.sleep(t)
 
 def zNeg():
     global z0
     z0 = z0 - 1
-    motorMove(inverse(x0,y0,z0))
+    motor1.motorMove(inverse(x0,y0,z0))
     var3.set(z0)
     time.sleep(t)
 
 def home():
     global x0,y0,z0
     x0,y0,z0 = 0,0,-50
-    motorMove(inverse(x0,y0,z0))
+    motor1.motorMove(inverse(x0,y0,z0))
     var1.set(x0)
     var2.set(y0)
     var3.set(z0)
@@ -66,7 +68,7 @@ def moveScale():
     x0 = var1.get()
     y0 = var2.get()
     z0 = var3.get()
-    motorMove(inverse(x0,y0,z0))
+    motor1.motorMove(inverse(x0,y0,z0))
 
 def showOutput():
     global x0,y0,z0
@@ -77,16 +79,17 @@ def showOutput():
     OutputAngle1.config(text=round(angles[1],2))
     OutputAngle2.config(text=round(angles[2],2))
     OutputAngle3.config(text=round(angles[3],2))
-
+'''
 def plot_3D():
-	global x0,y0,z0
-	fig = plot.figure()
-	axes = fig.add_subplot(111, projection='3d')
-	axes.scatter(x0,y0,z0,c='r',marker='o')
-	axes.set_xlabel('x axis')
-	axes.set_ylabel('y axis')
-	axes.set_zlabel('z axis')
-	plot.show()
+    global x0,y0,z0
+    fig = plot.figure()
+    axes = fig.add_subplot(111, projection='3d')
+    axes.scatter(x0,y0,z0,c='r',marker='o')
+    axes.set_xlabel('x axis')
+    axes.set_ylabel('y axis')
+    axes.set_zlabel('z axis')
+    plot.show()
+'''
 
 #main window
 root = Tk()
@@ -155,6 +158,6 @@ OutputButtonFrame = LabelFrame(root).pack(fill=X)
 displayOutput = Button(OutputButtonFrame, text = "Output", fg = "Black", bg = "Blue", command = showOutput).pack(fill=X)
 
 #Plot coordinates onto 3D grid
-Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D).pack(fill=X)
+#Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D).pack(fill=X)
 
 root.mainloop()
