@@ -3,13 +3,13 @@ from kinematics import *
 #from mpl_toolkits.mplot3d import Axes3D
 #import matplotlib.pyplot as plot
 import Slush
-import move_motors
+import motorFile
 import time
 
 #Initialize the Board
 SlushEngine = Slush.sBoard()
 
-motor1 = move_motors.motorControl('Motor1',1)
+motor1 = motorFile.motorControl('Motor1',1)
 
 #functions called to move delta 
 def xPos():
