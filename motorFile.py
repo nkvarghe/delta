@@ -3,15 +3,15 @@ import Slush
 #trying to put it all in a class
 class motorControl():
 
-    def __init__(self,name,number,angles='None'):
+    def __init__(self,name,number):
         self.name = name
         self.number = number
-        self.angles = angles
         self.motor = Slush.Motor(self.number)
 
-    def motorMove(self,angles):
-        self.anglesToSteps = angles[1]/1.8
-        self.motor.move(int(self.anglesToSteps))
+    def motorMove(self,angle):
+        angleToSteps = angle/1.8
+        self.motor.move(int(angleToSteps))
+        print(angleToSteps)
 """
     def setMotorCurrent(self,current):
         self.current = current

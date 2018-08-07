@@ -10,54 +10,65 @@ import time
 SlushEngine = Slush.sBoard()
 
 motor1 = motorFile.motorControl('Motor1',1)
+#motor2 = ..
+#motor3 = ..
+
+motors = [motor1]
 
 #functions called to move delta 
 def xPos():
     global x0
     x0 = x0 + 1
-    motor1.motorMove(inverse(x0,y0,z0))
+    for index, motor in enumerate(motors, start=1):
+        motor.motorMove(inverse(x0, y0, z0)[index])
     var1.set(x0)
     time.sleep(t)
 
 def xNeg():
     global x0
     x0 = x0 - 1
-    motor1.motorMove(inverse(x0,y0,z0))
+    for index, motor in enumerate(motors, start=1):
+        motor.motorMove(inverse(x0, y0, z0)[index])
     var1.set(x0)
     time.sleep(t)
 
 def yPos():
     global y0
     y0 = y0 + 1
-    motor1.motorMove(inverse(x0,y0,z0))
+    for index, motor in enumerate(motors, start=1):
+        motor.motorMove(inverse(x0, y0, z0)[index])
     var2.set(y0)
     time.sleep(t)
 
 def yNeg():
     global y0
     y0 = y0 - 1
-    motor1.motorMove(inverse(x0,y0,z0))
+    for index, motor in enumerate(motors, start=1):
+        motor.motorMove(inverse(x0, y0, z0)[index])
     var2.set(y0)
     time.sleep(t)
 
 def zPos():
     global z0
     z0 = z0 + 1
-    motor1.motorMove(inverse(x0,y0,z0))
+    for index, motor in enumerate(motors, start=1):
+        motor.motorMove(inverse(x0, y0, z0)[index])
     var3.set(z0)
     time.sleep(t)
 
 def zNeg():
     global z0
     z0 = z0 - 1
-    motor1.motorMove(inverse(x0,y0,z0))
+    for index, motor in enumerate(motors, start=1):
+        motor.motorMove(inverse(x0, y0, z0)[index])
     var3.set(z0)
     time.sleep(t)
 
 def home():
     global x0,y0,z0
     x0,y0,z0 = 0,0,-50
-    motor1.motorMove(inverse(x0,y0,z0))
+    for index, motor in enumerate(motors, start=1):
+        motor.motorMove(inverse(x0, y0, z0)[index])
     var1.set(x0)
     var2.set(y0)
     var3.set(z0)
@@ -68,7 +79,8 @@ def moveScale():
     x0 = var1.get()
     y0 = var2.get()
     z0 = var3.get()
-    motor1.motorMove(inverse(x0,y0,z0))
+    for index, motor in enumerate(motors, start=1):
+        motor.motorMove(inverse(x0, y0, z0)[index])
 
 def showOutput():
     global x0,y0,z0
