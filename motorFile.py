@@ -11,7 +11,7 @@ class motorControl():
     def motorMove(self,angle):
         angleToSteps = angle/1.8
         self.motor.move(int(angleToSteps))
-        print(angleToSteps)
+        #print(self.name + '= ' + str(angleToSteps))
 """
     def setMotorCurrent(self,current):
         self.current = current

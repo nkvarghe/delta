@@ -10,10 +10,10 @@ import time
 SlushEngine = Slush.sBoard()
 
 motor1 = motorFile.motorControl('Motor1',1)
-#motor2 = ..
-#motor3 = ..
+motor2 = motorFile.motorControl('Motor2',2)
+motor3 = motorFile.motorControl('Motor3',3)
 
-motors = [motor1]
+motors = [motor1,motor2,motor3]
 
 #functions called to move delta 
 def xPos():
