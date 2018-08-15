@@ -11,12 +11,16 @@ class motorControl():
     def motorMove(self,angle):
         angleToSteps = angle/1.8
         self.motor.move(int(angleToSteps))
-        #print(self.name + '= ' + str(angleToSteps))
-"""
-    def setMotorCurrent(self,current):
-        self.current = current
-        self.name.setCurrent(current,current,current,current)
+        #print(self.name + '= ' + str(angleToSteps)) 
 
+    def setMotorSpeed(self,speed):
+        if speed == '':
+            speed = '0'
+        self.speed = int(speed)
+        self.motor.setMaxSpeed(speed)
+        #print(speed)
+        
+"""
     def home(self):
         while (self.name.isBusy()):
             continue

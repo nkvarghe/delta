@@ -82,6 +82,10 @@ def moveScale():
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
 
+def setSpeed():
+    for motor in motors:
+        motor.setMotorSpeed(speed.get())
+        
 def showOutput():
     global x0,y0,z0
     angles = inverse(x0,y0,z0)
@@ -114,6 +118,15 @@ y0 = 0
 z0 = -50
 t = 0
 initialAngles = inverse(x0,y0,z0)
+
+#Set the speed
+speed=StringVar()
+SpeedFrame = LabelFrame(root, text = "Speed")
+SpeedFrame.pack()
+speedLabel = Label(SpeedFrame, text = "Enter Speed").grid(row=0,column=0)
+speedEntry = Entry(SpeedFrame, textvariable = speed).grid(row=0,column=1)
+speedButtonFrame = LabelFrame(root).pack(fill=X)
+speedButton = Button(speedButtonFrame, text = "SET SPEED", fg = 'black', bg = 'red', command = setSpeed).pack(fill=X)
 
 #Buttons to move by increments
 ButtonFrame = LabelFrame(root,text = "Buttons")
