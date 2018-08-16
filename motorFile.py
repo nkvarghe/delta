@@ -1,6 +1,5 @@
 import Slush
 
-#trying to put it all in a class
 class motorControl():
 
     def __init__(self,name,number):

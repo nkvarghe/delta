@@ -1,7 +1,7 @@
 from tkinter import *
 from kinematics import *
-#from mpl_toolkits.mplot3d import Axes3D
-#import matplotlib.pyplot as plot
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plot
 import Slush
 import motorFile
 import time
@@ -95,7 +95,7 @@ def showOutput():
     OutputAngle1.config(text=round(angles[1],2))
     OutputAngle2.config(text=round(angles[2],2))
     OutputAngle3.config(text=round(angles[3],2))
-'''
+
 def plot_3D():
     global x0,y0,z0
     fig = plot.figure()
@@ -105,7 +105,6 @@ def plot_3D():
     axes.set_ylabel('y axis')
     axes.set_zlabel('z axis')
     plot.show()
-'''
 
 #main window
 root = Tk()
@@ -183,6 +182,6 @@ OutputButtonFrame = LabelFrame(root).pack(fill=X)
 displayOutput = Button(OutputButtonFrame, text = "Output", fg = "Black", bg = "Blue", command = showOutput).pack(fill=X)
 
 #Plot coordinates onto 3D grid
-#Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D).pack(fill=X)
+Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D).pack(fill=X)
 
 root.mainloop()
