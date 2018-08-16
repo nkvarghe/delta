@@ -20,13 +20,11 @@ class motorControl():
         #print(speed)
         
 """
-    def home(self):
-        while (self.name.isBusy()):
+    def goHome(self):
+        while (self.motor.isBusy()):
             continue
-        self.name.goUntilPress(0,1,1000)
-
-        while (self.name.isBusy()):
+        self.motor.goUntilPress(0,1,1000)
+        while (self.motor.isBusy()):
             continue
-        self.name.setAsHome()
-
+        self.motor.setAsHome()
 """

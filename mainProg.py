@@ -63,7 +63,11 @@ def zNeg():
         motor.motorMove(inverse(x0, y0, z0)[index])
     var3.set(z0)
     time.sleep(t)
-
+"""
+def home():
+    for motor in motors:
+        motor.goHome()
+"""
 def home():
     global x0,y0,z0
     x0,y0,z0 = 0,0,-50
@@ -117,6 +121,11 @@ y0 = 0
 z0 = -50
 t = 0
 initialAngles = inverse(x0,y0,z0)
+
+#Home the robot
+HomeFrame = LabelFrame(root, text = "Home")
+HomeFrame.pack(fill=X)
+HomeButton = Button(HomeFrame, text = "HOME", fg = "Black", bg = "Green", command = home.pack(fill=X)
 
 #Set the speed
 speed=StringVar()
