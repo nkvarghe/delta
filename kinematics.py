@@ -4,12 +4,11 @@
 
 import math
 
-# Specific geometry for bitbeambot:
-# http://flic.kr/p/cYaQah
-e  =  26.0
-f  =  69.0
-re = 128.0
-rf =  88.0
+# Delta's design parameters
+e  =  86.0
+f  =  129.0
+re = 214.0
+rf =  174.0
 
 # Trigonometric constants
 s      = 165*2
