@@ -63,11 +63,7 @@ def zNeg():
         motor.motorMove(inverse(x0, y0, z0)[index])
     var3.set(z0)
     time.sleep(t)
-"""
-def home():
-    for motor in motors:
-        motor.goHome()
-"""
+
 def home():
     global x0,y0,z0
     x0,y0,z0 = 0,0,-50
@@ -112,7 +108,7 @@ def plot_3D():
 
 #main window
 root = Tk()
-root.geometry('500x600+200+200')
+root.geometry('300x665+400+15')
 root.title('My Delta')
 
 #Home coordinates and time constant
@@ -123,18 +119,16 @@ t = 0
 initialAngles = inverse(x0,y0,z0)
 
 #Home the robot
-HomeFrame = LabelFrame(root, text = "Home")
-HomeFrame.pack(fill=X)
-HomeButton = Button(HomeFrame, text = "HOME", fg = "Black", bg = "Green", command = home.pack(fill=X)
+HomeButton = Button(root, text = "HOME", fg = "Black", bg = "Green", font = ('Times',14,'bold'), command = home).pack(fill=X)
 
 #Set the speed
 speed=StringVar()
-SpeedFrame = LabelFrame(root, text = "Speed")
+SpeedFrame = LabelFrame(root)
 SpeedFrame.pack()
 speedLabel = Label(SpeedFrame, text = "Enter Speed").grid(row=0,column=0)
 speedEntry = Entry(SpeedFrame, textvariable = speed).grid(row=0,column=1)
 speedButtonFrame = LabelFrame(root).pack(fill=X)
-speedButton = Button(speedButtonFrame, text = "SET SPEED", fg = 'black', bg = 'red', command = setSpeed).pack(fill=X)
+speedButton = Button(speedButtonFrame, text = "SET SPEED", fg = 'black', bg = 'red', font = ('Times',14,'bold'), command = setSpeed).pack(fill=X)
 
 #Buttons to move by increments
 ButtonFrame = LabelFrame(root,text = "Buttons")
@@ -153,12 +147,12 @@ var2 = IntVar()
 var3 = IntVar()
 ScaleFrame = LabelFrame(root,text = "Sliders")
 ScaleFrame.pack()
-slider1 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_=0,to = 30,label = 'X-scale',variable = var1).grid(row=0,column=0)
-slider2 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_= 0,to = 30,label = 'Y-scale',variable = var2).grid(row=0,column=1)
-slider3 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_ = -50,to = -39,label = 'Z-scale',variable = var3).grid(row=0,column=2)
+slider1 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_=0,to = 30,label = 'X',variable = var1).grid(row=0,column=0)
+slider2 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_= 0,to = 30,label = 'Y',variable = var2).grid(row=0,column=1)
+slider3 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_ = -50,to = -39,label = 'Z',variable = var3).grid(row=0,column=2)
 var3.set(-50)
 ScaleButtonFrame = LabelFrame(root).pack(fill=X)
-scale = Button(ScaleButtonFrame, text = "MOVE!", fg = "red", bg = "black", command = moveScale).pack(fill=X)
+scale = Button(ScaleButtonFrame, text = "MOVE!", fg = "red", bg = "black", font = ('Times',14,'bold'), command = moveScale).pack(fill=X)
 
 #Display coordinates and angles
 OutputBox = LabelFrame(root,text = "OutputBox")
@@ -188,9 +182,9 @@ Angle3.grid(row=6,column=0)
 OutputAngle3 = Label(OutputBox,text = round(initialAngles[3],2))
 OutputAngle3.grid(row=6,column=1)
 OutputButtonFrame = LabelFrame(root).pack(fill=X)
-displayOutput = Button(OutputButtonFrame, text = "Output", fg = "Black", bg = "Blue", command = showOutput).pack(fill=X)
+displayOutput = Button(OutputButtonFrame, text = "GET OUTPUT", fg = "Black", bg = "Cyan", font = ('Times',14,'bold'), command = showOutput).pack(fill=X)
 
 #Plot coordinates onto 3D grid
-Plot = Button(root, text = "Plot", fg = "Black", bg = "Green", command = plot_3D).pack(fill=X)
+Plot = Button(root, text = "PLOT", fg = "Black", bg = "Yellow", font = ('Times',14,'bold'), command = plot_3D).pack(fill=X)
 
 root.mainloop()

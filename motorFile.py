@@ -18,13 +18,3 @@ class motorControl():
         self.speed = int(speed)
         self.motor.setMaxSpeed(speed)
         #print(speed)
-        
-"""
-    def goHome(self):
-        while (self.motor.isBusy()):
-            continue
-        self.motor.goUntilPress(0,1,1000)
-        while (self.motor.isBusy()):
-            continue
-        self.motor.setAsHome()
-"""
