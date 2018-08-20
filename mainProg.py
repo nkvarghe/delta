@@ -72,6 +72,10 @@ def zNeg():
     var3.set(z0)
     time.sleep(t)
 
+def home1():
+    for motor in motors:
+        motor.goHome()
+
 def home():
     global x0,y0,z0,file
     x0,y0,z0 = 0,0,-50
@@ -102,6 +106,7 @@ def showOutput():
     OutputX.config(text=x0)
     OutputY.config(text=y0)
     OutputZ.config(text=z0)
+    
     OutputAngle1.config(text=round(angles[1],2))
     OutputAngle2.config(text=round(angles[2],2))
     OutputAngle3.config(text=round(angles[3],2))

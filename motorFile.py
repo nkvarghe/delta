@@ -8,13 +8,12 @@ class motorControl():
         self.motor = Slush.Motor(self.number)
 
     def motorMove(self,angle):
-        angleToSteps = angle/1.8
-        self.motor.move(int(angleToSteps))
-        #print(self.name + '= ' + str(angleToSteps)) 
-
+        currentSteps = angle/1.8
+        self.motor.goTo(int(currentSteps))
+        print([self.name,round(currentSteps,2)])
+        
     def setMotorSpeed(self,speed):
         if speed == '':
             speed = '0'
         self.speed = int(speed)
         self.motor.setMaxSpeed(speed)
-        #print(speed)
