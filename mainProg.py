@@ -15,72 +15,82 @@ motor3 = motorFile.motorControl('Motor3',3)
 
 motors = [motor1,motor2,motor3]
 
+file = open('someFile.txt','a+')
+
 #functions called to move delta 
 def xPos():
-    global x0
+    global x0,y0,z0,file
     x0 = x0 + 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
+    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
     var1.set(x0)
     time.sleep(t)
 
 def xNeg():
-    global x0
+    global x0,y0,z0,file
     x0 = x0 - 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
+    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
     var1.set(x0)
     time.sleep(t)
 
 def yPos():
-    global y0
+    global x0,y0,z0,file
     y0 = y0 + 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
+    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
     var2.set(y0)
     time.sleep(t)
 
 def yNeg():
-    global y0
+    global x0,y0,z0,file
     y0 = y0 - 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
+    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
     var2.set(y0)
     time.sleep(t)
 
 def zPos():
-    global z0
+    global x0,y0,z0,file
     z0 = z0 + 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
+    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
     var3.set(z0)
     time.sleep(t)
 
 def zNeg():
-    global z0
+    global x0,y0,z0,file
     z0 = z0 - 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
+    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
     var3.set(z0)
     time.sleep(t)
 
 def home():
-    global x0,y0,z0
+    global x0,y0,z0,file
     x0,y0,z0 = 0,0,-50
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
+    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
     var1.set(x0)
     var2.set(y0)
     var3.set(z0)
     time.sleep(t)
 
 def moveScale():
-    global x0,y0,z0
+    global x0,y0,z0,file
     x0 = var1.get()
     y0 = var2.get()
     z0 = var3.get()
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
+    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
 
 def setSpeed():
     for motor in motors:
