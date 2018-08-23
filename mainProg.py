@@ -8,6 +8,7 @@ import time
 
 #Initialize the Board
 SlushEngine = Slush.sBoard()
+COORDINATES_FILE = 'someFile.txt'
 
 motor1 = motorFile.motorControl('Motor1',1)
 motor2 = motorFile.motorControl('Motor2',2)
@@ -15,60 +16,64 @@ motor3 = motorFile.motorControl('Motor3',3)
 
 motors = [motor1,motor2,motor3]
 
-file = open('someFile.txt','a+')
+
+def save_coordinates(x, y, z):
+    coord_file = open(COORDINATES_FILE, 'a+')
+    coord_file.write('{},{},{}\n'.format(x, y, z))
+    coord_file.close()
 
 #functions called to move delta 
 def xPos():
-    global x0,y0,z0,file
+    global x0,y0,z0
     x0 = x0 + 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
-    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
+    save_coordinates(x0, y0, z0)
     var1.set(x0)
     time.sleep(t)
 
 def xNeg():
-    global x0,y0,z0,file
+    global x0,y0,z0
     x0 = x0 - 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
-    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
+    save_coordinates(x0, y0, z0)
     var1.set(x0)
     time.sleep(t)
 
 def yPos():
-    global x0,y0,z0,file
+    global x0,y0,z0
     y0 = y0 + 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
-    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
+    save_coordinates(x0, y0, z0)
     var2.set(y0)
     time.sleep(t)
 
 def yNeg():
-    global x0,y0,z0,file
+    global x0,y0,z0
     y0 = y0 - 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
-    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
+    save_coordinates(x0, y0, z0)
     var2.set(y0)
     time.sleep(t)
 
 def zPos():
-    global x0,y0,z0,file
+    global x0,y0,z0
     z0 = z0 + 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
-    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
+    save_coordinates(x0, y0, z0)
     var3.set(z0)
     time.sleep(t)
 
 def zNeg():
-    global x0,y0,z0,file
+    global x0,y0,z0
     z0 = z0 - 1
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
-    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
+    save_coordinates(x0, y0, z0)
     var3.set(z0)
     time.sleep(t)
 
@@ -77,24 +82,24 @@ def home1():
         motor.goHome()
 
 def home():
-    global x0,y0,z0,file
+    global x0,y0,z0
     x0,y0,z0 = 0,0,-50
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
-    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
+    save_coordinates(x0, y0, z0)
     var1.set(x0)
     var2.set(y0)
     var3.set(z0)
     time.sleep(t)
 
 def moveScale():
-    global x0,y0,z0,file
+    global x0,y0,z0
     x0 = var1.get()
     y0 = var2.get()
     z0 = var3.get()
     for index, motor in enumerate(motors, start=1):
         motor.motorMove(inverse(x0, y0, z0)[index])
-    file.write('\n'+str(x0)+','+str(y0)+','+str(z0))
+    save_coordinates(x0, y0, z0)
 
 def setSpeed():
     for motor in motors:
@@ -106,16 +111,30 @@ def showOutput():
     OutputX.config(text=x0)
     OutputY.config(text=y0)
     OutputZ.config(text=z0)
-    
     OutputAngle1.config(text=round(angles[1],2))
     OutputAngle2.config(text=round(angles[2],2))
     OutputAngle3.config(text=round(angles[3],2))
 
 def plot_3D():
-    global x0,y0,z0
+    coord_file = open(COORDINATES_FILE, 'r')
+    data = coord_file.read()
+    coord_file.close()
+    lines = data.split('\n')
+    print(lines)
+    X_list = []
+    Y_list = []
+    Z_list = []
+    for line in lines:
+        if len(line) > 1:
+            X, Y, Z = line.split(',')
+            print(X,Y,Z)
+            X_list.append(int(X))
+            Y_list.append(int(Y))
+            Z_list.append(int(Z))
+    print(X_list,Y_list,Z_list)
     fig = plot.figure()
     axes = fig.add_subplot(111, projection='3d')
-    axes.scatter(x0,y0,z0,c='r',marker='o')
+    axes.scatter(X_list,Y_list,Z_list,c='r',marker='o')
     axes.set_xlabel('x axis')
     axes.set_ylabel('y axis')
     axes.set_zlabel('z axis')

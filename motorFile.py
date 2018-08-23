@@ -1,4 +1,4 @@
-import Slush
+#import Slush
 
 class motorControl():
 
@@ -14,11 +14,11 @@ class motorControl():
         
     def setMotorSpeed(self,speed):
         if speed == '':
-            speed = '0'
+        	speed = '0'
         self.speed = int(speed)
         self.motor.setMaxSpeed(speed)
 
-	def goHome(self):
+    def goHome(self):
         while (self.motor.isBusy()):
             continue
         self.motor.goUntilPress(0,1,1000)
