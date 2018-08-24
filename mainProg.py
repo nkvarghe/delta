@@ -8,7 +8,7 @@ import time
 
 #Initialize the Board
 SlushEngine = Slush.sBoard()
-COORDINATES_FILE = 'someFile.txt'
+COORDINATES_FILE = 'points.txt'
 
 motor1 = motorFile.motorControl('Motor1',1)
 motor2 = motorFile.motorControl('Motor2',2)
@@ -115,26 +115,27 @@ def showOutput():
     OutputAngle2.config(text=round(angles[2],2))
     OutputAngle3.config(text=round(angles[3],2))
 
-def plot_3D():
+def readFile():
     coord_file = open(COORDINATES_FILE, 'r')
     data = coord_file.read()
     coord_file.close()
     lines = data.split('\n')
-    print(lines)
     X_list = []
     Y_list = []
     Z_list = []
     for line in lines:
         if len(line) > 1:
             X, Y, Z = line.split(',')
-            print(X,Y,Z)
             X_list.append(int(X))
             Y_list.append(int(Y))
             Z_list.append(int(Z))
-    print(X_list,Y_list,Z_list)
+            
+    return [X_list,Y_list,Z_list]
+
+def plotCoordinates():
     fig = plot.figure()
     axes = fig.add_subplot(111, projection='3d')
-    axes.scatter(X_list,Y_list,Z_list,c='r',marker='o')
+    axes.scatter(readFile()[0],readFile()[1],readFile()[2],c='r',marker='o')
     axes.set_xlabel('x axis')
     axes.set_ylabel('y axis')
     axes.set_zlabel('z axis')
@@ -219,6 +220,6 @@ OutputButtonFrame = LabelFrame(root).pack(fill=X)
 displayOutput = Button(OutputButtonFrame, text = "GET OUTPUT", fg = "Black", bg = "Cyan", font = ('Times',14,'bold'), command = showOutput).pack(fill=X)
 
 #Plot coordinates onto 3D grid
-Plot = Button(root, text = "PLOT", fg = "Black", bg = "Yellow", font = ('Times',14,'bold'), command = plot_3D).pack(fill=X)
+Plot = Button(root, text = "PLOT", fg = "Black", bg = "Yellow", font = ('Times',14,'bold'), command = plotCoordinates).pack(fill=X)
 
 root.mainloop()

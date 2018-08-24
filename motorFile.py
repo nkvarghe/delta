@@ -1,4 +1,4 @@
-#import Slush
+import Slush
 
 class motorControl():
 
@@ -10,11 +10,10 @@ class motorControl():
     def motorMove(self,angle):
         currentSteps = angle/1.8
         self.motor.goTo(int(currentSteps))
-        print([self.name,round(currentSteps,2)])
         
     def setMotorSpeed(self,speed):
         if speed == '':
-        	speed = '0'
+            speed = '0'
         self.speed = int(speed)
         self.motor.setMaxSpeed(speed)
 
