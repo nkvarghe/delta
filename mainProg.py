@@ -84,6 +84,16 @@ def zNeg():
     var3.set(z0)
     time.sleep(t)
 
+#delta moves according to the points on the saved file
+def moveFromFile():
+    X_list,Y_list,Z_list = readFile()[0], readFile()[1], readFile()[2]
+    for i in range(len(readFile()[0])):
+        x,y,z = X_list[i],Y_list[i],Z_list[i]
+        print(x,y,z)
+        for index, motor in enumerate(motors, start=1):
+            #motor.motorMove(inverse(x0, y0, z0)[index])
+            print([motor.name,inverse(x,y,z)[index]])
+
 #Homes each motor of it's limit switch
 def home1():
     for motor in motors:
@@ -156,7 +166,7 @@ def plotCoordinates():
 
 #main window
 root = Tk()
-root.geometry('300x665+400+15')
+root.geometry('300x705+400+15')
 root.title('My Delta')
 
 #Home coordinates and time constant
@@ -200,7 +210,10 @@ slider2 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_= 0,to
 slider3 = Scale(ScaleFrame,orient = VERTICAL,length = 150,width = 40,from_ = -50,to = -39,label = 'Z',variable = var3).grid(row=0,column=2)
 var3.set(-50)
 ScaleButtonFrame = LabelFrame(root).pack(fill=X)
-scale = Button(ScaleButtonFrame, text = "MOVE!", fg = "red", bg = "black", font = ('Times',14,'bold'), command = moveScale).pack(fill=X)
+scale = Button(ScaleButtonFrame, text = "MOVE TO SCALE POSITION", fg = "red", bg = "black", font = ('Times',14,'bold'), command = moveScale).pack(fill=X)
+
+#Move from file button
+moveFile = Button(root, text = "MOVE FROM FILE", fg = "Black", bg = "magenta", font = ('Times',14,'bold'), command = moveFromFile).pack(fill=X)
 
 #Configuration of Output box
 OutputBox = LabelFrame(root,text = "OutputBox")
