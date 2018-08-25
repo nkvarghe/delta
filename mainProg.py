@@ -1,3 +1,7 @@
+""" This program contains the bulk of the code base. 
+It makes use of the tkinter library for UI and calls the kinematics,slush and motorFile modules
+for the sole purpose of moving the delta robot from the UI."""
+
 from tkinter import *
 from kinematics import *
 from mpl_toolkits.mplot3d import Axes3D
@@ -8,21 +12,24 @@ import time
 
 #Initialize the Board
 SlushEngine = Slush.sBoard()
+
+#File for coordinates
 COORDINATES_FILE = 'points.txt'
 
+#Create motor objects from motorContol class to access Slush functions
 motor1 = motorFile.motorControl('Motor1',1)
 motor2 = motorFile.motorControl('Motor2',2)
 motor3 = motorFile.motorControl('Motor3',3)
 
 motors = [motor1,motor2,motor3]
 
-
+#Opens and writes coordinates to file
 def save_coordinates(x, y, z):
     coord_file = open(COORDINATES_FILE, 'a+')
     coord_file.write('{},{},{}\n'.format(x, y, z))
     coord_file.close()
 
-#functions called to move delta 
+#Moves delta by 1mm in funcName direction
 def xPos():
     global x0,y0,z0
     x0 = x0 + 1
@@ -77,6 +84,7 @@ def zNeg():
     var3.set(z0)
     time.sleep(t)
 
+#Homes each motor of it's limit switch
 def home1():
     for motor in motors:
         motor.goHome()
@@ -92,6 +100,7 @@ def home():
     var3.set(z0)
     time.sleep(t)
 
+#Scales for greater degree of movement
 def moveScale():
     global x0,y0,z0
     x0 = var1.get()
@@ -101,10 +110,12 @@ def moveScale():
         motor.motorMove(inverse(x0, y0, z0)[index])
     save_coordinates(x0, y0, z0)
 
+#Sets delta speed
 def setSpeed():
     for motor in motors:
         motor.setMotorSpeed(speed.get())
-        
+
+#Displays coordinates and angles
 def showOutput():
     global x0,y0,z0
     angles = inverse(x0,y0,z0)
@@ -115,6 +126,7 @@ def showOutput():
     OutputAngle2.config(text=round(angles[2],2))
     OutputAngle3.config(text=round(angles[3],2))
 
+#Reads the points file
 def readFile():
     coord_file = open(COORDINATES_FILE, 'r')
     data = coord_file.read()
@@ -132,6 +144,7 @@ def readFile():
             
     return [X_list,Y_list,Z_list]
 
+#Plots coordinates onto a 3D grid
 def plotCoordinates():
     fig = plot.figure()
     axes = fig.add_subplot(111, projection='3d')
@@ -176,7 +189,7 @@ y_neg = Button(ButtonFrame, text = "y-neg", fg = "red", command = yNeg).grid(row
 z_pos = Button(ButtonFrame, text = "z-pos", fg = "red", command = zPos).grid(row=3,column=0)
 z_neg = Button(ButtonFrame, text = "z-neg", fg = "red", command = zNeg).grid(row=3,column=1)
 
-#Scales for greater degree of movement
+#Configure Scales
 var1 = IntVar()
 var2 = IntVar()
 var3 = IntVar()
@@ -189,7 +202,7 @@ var3.set(-50)
 ScaleButtonFrame = LabelFrame(root).pack(fill=X)
 scale = Button(ScaleButtonFrame, text = "MOVE!", fg = "red", bg = "black", font = ('Times',14,'bold'), command = moveScale).pack(fill=X)
 
-#Display coordinates and angles
+#Configuration of Output box
 OutputBox = LabelFrame(root,text = "OutputBox")
 OutputBox.pack()
 XLabel = Label(OutputBox,text = 'X :')
@@ -219,7 +232,7 @@ OutputAngle3.grid(row=6,column=1)
 OutputButtonFrame = LabelFrame(root).pack(fill=X)
 displayOutput = Button(OutputButtonFrame, text = "GET OUTPUT", fg = "Black", bg = "Cyan", font = ('Times',14,'bold'), command = showOutput).pack(fill=X)
 
-#Plot coordinates onto 3D grid
+#Plot button
 Plot = Button(root, text = "PLOT", fg = "Black", bg = "Yellow", font = ('Times',14,'bold'), command = plotCoordinates).pack(fill=X)
 
 root.mainloop()

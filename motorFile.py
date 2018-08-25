@@ -1,3 +1,5 @@
+#This Class has functions that utilizes the Slush functions needed to control the delta robot's motors
+
 import Slush
 
 class motorControl():
@@ -6,7 +8,7 @@ class motorControl():
         self.name = name
         self.number = number
         self.motor = Slush.Motor(self.number)
-
+    
     def motorMove(self,angle):
         currentSteps = angle/1.8
         self.motor.goTo(int(currentSteps))
